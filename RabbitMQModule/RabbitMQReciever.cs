@@ -25,7 +25,7 @@ namespace RabbitMQModule
 
         public void GetMesssge<T>(Action<T> messageProcessor)
         {
-            T result = default;
+            T? result = default;
             try
             {
                 (IModel channel, IConnection connection) = CreateChannel(this.ClientProviderAppName, this.ExchangeName, this.QueueName, this.RoutingKey);

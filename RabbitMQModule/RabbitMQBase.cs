@@ -4,9 +4,9 @@ namespace RabbitMQModule
 {
     public class RabbitMQBase
     {
-        private static string UserName { get; } = "guest";
-        private static string Password { get; } = "guest";
-        private static string Host { get; } = "localhost";
+        private static string? UserName { get; } = "guest";
+        private static string? Password { get; } = "guest";
+        private static string? Host { get; } = "localhost";
         private static int Port { get; } = 5672;
         protected string? ExchangeName { get; set; } = "DemoExchangeName";
         protected string? RoutingKey { get; set; } = "DemoRoutingKey";

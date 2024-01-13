@@ -1,4 +1,5 @@
 ﻿using RabbitMQ.Client;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
 
@@ -11,24 +12,24 @@ namespace RabbitMQModule
 
         public RabbitMQConsumer(string? exchangeName = default, string?
             routingKey = default, string? queueName = default, 
-            string clientProviderAppName = default) 
+            string? clientProviderAppName = default) 
             : base(exchangeName, routingKey, queueName)
         {
             this.ClientProviderAppName = clientProviderAppName;
         }
 
 
-        private static string SerializeMessage<T>(T instance)
+        private static string SerializeMessage(T instance)
         {
             return JsonSerializer.Serialize(instance);
         }
 
-        private bool SendMessage<T>(T message)
+        private bool SendMessage(T message)
         {
             try
             {
                 (IModel channel, IConnection connection) = CreateChannel(this.ClientProviderAppName, this.ExchangeName, this.QueueName, this.RoutingKey);
-                byte[] messageToSend = Encoding.UTF8.GetBytes(SerializeMessage<T>(message));
+                byte[] messageToSend = Encoding.UTF8.GetBytes(SerializeMessage(message));
                 channel.BasicPublish(this.ExchangeName, this.RoutingKey, null, messageToSend);
 
                 channel.Close();
